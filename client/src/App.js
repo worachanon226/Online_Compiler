@@ -5,6 +5,7 @@ import React, {useState} from 'react'
 function App() {
 
   const [code,SetCode] = useState('');
+  const [output,SetOutput] = useState('');
 
   const handleSubmit = async () =>{
     const payload = {
@@ -12,9 +13,12 @@ function App() {
       code
     };
 
-    const output = await axios.post("http://localhost:5000/run", payload);
-
-    console.log(output);
+    try{
+      const {data} = await axios.post("http://localhost:5000/run", payload);
+      SetOutput(data.output);
+    }catch(err){
+      console.log(err.response);
+    }
   }
 
   return (
@@ -25,6 +29,7 @@ function App() {
       }}></textarea>
       <br/>
       <button onClick={handleSubmit}>Submit</button>
+      <p>{output}</p>
     </div>
   );
 }
