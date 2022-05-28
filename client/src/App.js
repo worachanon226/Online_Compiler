@@ -5,6 +5,7 @@ import React, {useState} from 'react'
 function App() {
 
   const [code,SetCode] = useState('');
+  const [langugue,setLangugue] = useState("cpp");
   const [output,SetOutput] = useState('');
 
   const handleSubmit = async () =>{
@@ -24,7 +25,25 @@ function App() {
   return (
     <div className = "App">
       <h1>Online Code Compiler</h1>
-      <textarea rows="20" cols="75" value={code} onChange={(e)=>{
+      <div>
+        <label>Langugue: </label>
+        <select
+        value={langugue}
+        onChange={(e)=>{
+            setLangugue(e.target.value);
+            console.log(e.target.value);
+          }
+        }>
+          <option value="cpp">C++</option>
+          <option value="py">Python</option>
+        </select>
+      </div>
+      <br/>
+      <textarea 
+        rows="20" 
+        cols="75" 
+        value={code} 
+        onChange={(e)=>{
         SetCode(e.target.value);
       }}></textarea>
       <br/>

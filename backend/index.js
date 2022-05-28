@@ -16,6 +16,7 @@ app.get("/",(req,res)=>{
 
 app.post("/run",async(req,res)=>{
     const {langugue = "cpp",code} = req.body;
+    console.log(langugue, code.length)
 
     if(code === undefined){
         return res.status(400).json({success: false, error: "Empty code body"})
