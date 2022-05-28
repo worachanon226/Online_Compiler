@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 
 const {generateFile} = require('./generateFile');
 const {executeCpp} = require('./executeCpp');
 
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
@@ -19,12 +21,14 @@ app.post("/run",async(req,res)=>{
         return res.status(400).json({success: false, error: "Empty code body"})
     }
 
+    try{
     const filepath = await generateFile(langugue,code);
     const output = await executeCpp(filepath);
 
-    console.log(output);
-
     return res.json({filepath,output});
+    }catch(err){
+        res.status(500).json({err});
+    }
 });
 
 app.listen(5000, ()=>{
