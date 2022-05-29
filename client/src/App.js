@@ -10,15 +10,22 @@ function App() {
 
   const handleSubmit = async () =>{
     const payload = {
-      langugue:"cpp",
+      langugue,
       code
     };
 
     try{
       const {data} = await axios.post("http://localhost:5000/run", payload);
       SetOutput(data.output);
-    }catch(err){
-      console.log(err.response);
+    }catch({response}){
+      if(response){
+        const errMeg = response.data.err.stderr;
+        console.log(errMeg);
+      }
+      else{
+        window.alert("Error connecting to server!");
+      }
+      
     }
   }
 
